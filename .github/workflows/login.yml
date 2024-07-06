@@ -38,7 +38,7 @@ jobs:
         run: newman run ./2_login.json -g ./global.json -e ./postman.json --delay-request 1 --reporters cli, -r htmlextra --reporter-htmlextra-export ./result/report.html
 
       - name: Step 4 archive production artifacts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
               name: report
               path: ./result/report.html
