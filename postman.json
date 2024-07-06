@@ -1,0 +1,57 @@
+{
+	"id": "0cb8cdd2-903c-44c3-87f2-a3834ae2a6bb",
+	"name": "Postman",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://postman-treinamento.qacoders-academy.com.br/api",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FirstNameTeste",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastNameTeste",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "AccessProfile",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "ProviderMail",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-06-25T21:59:55.246Z",
+	"_postman_exported_using": "Postman/11.2.13"
+}

@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "ae0aad5a-b1df-47ce-8d8c-bfdd95eeb5d8",
+		"name": "2_login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21377494"
+	},
+	"item": [
+		{
+			"name": "Login com sucesso",
+			"item": [
+				{
+					"name": "signup-Sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//validando o status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//validando se na resposta retorna o token\r",
+									"pm.test(\"Checando se existe token no response\", function(){\r",
+									"    \r",
+									"//capturando o token no response, usando comando json.parse\r",
+									"//para analisar e trazer no mesmo padrão demonstrado no \r",
+									"//response no postman, usando o comando pm.response.text()\r",
+									"//depois .objeto para recuperar em texto a informação desejada\r",
+									"//que neste caso é o token, assim no final coloca-se .token\r",
+									"    let token = JSON.parse(pm.response.text()).token\r",
+									"\r",
+									"//verificando se existe dados no response do token\r",
+									"    pm.expect(token).to.exist\r",
+									"\r",
+									"//outra forma de verificar o token\r",
+									"//pm.expect(JSON.parse(pm.response.text()).token).to.exist\r",
+									"\r",
+									"})\r",
+									"\r",
+									"//verificando se o dado da massa gerado é o mesmo do response\r",
+									"//é realmente o que esta sendo gravado no backend, será feita\r",
+									"//uma comparação utilizando o equal que postman é apenas to.eql\r",
+									"pm.test(\"Checando se FullName é true\", function () {\r",
+									"   pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(pm.response.text()).user.fullName)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checando se Mail é true\", function () {\r",
+									"   pm.expect(pm.environment.get(\"Email\")).to.eql(JSON.parse(pm.response.text()).user.mail)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checando se accessProfile é true\", function () {\r",
+									"   pm.expect(pm.environment.get(\"AccessProfile\")).to.eql(JSON.parse(pm.response.text()).user.accessProfile)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Checando se status é true\", function () {\r",
+									"   pm.expect(true).to.eql(JSON.parse(pm.response.text()).user.status)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//escrevendo log no console\r",
+									"//console.log(pm.environment.get(\"FullName\"))\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//criando uma função e dando nome\r",
+									"function firstName() {\r",
+									"\r",
+									"//criando uma variavel e passando uma lista nela\r",
+									"let firstName = [\"Anderson\", \"Willian\", \"João\", \"Maria\", \"Pablo\", \"Karla\", \"Mithras\", \"yasmin\", \"Raisa\", \"Liza\", \"Rodrigo\", \"Adriano\", \"Gledson\"]\r",
+									"\r",
+									"//selecionando aliatóriamente (random) um nome da lista a cada requisição executada\r",
+									"//e o length vai contar e random é sortear aliatoóriamente e selecionará um item da lista\r",
+									"let randomItem = firstName[Math.floor(Math.random() * firstName.length)]\r",
+									"\r",
+									"//retornando um elemento da lista para ser usado\r",
+									"return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//setando as informações da lista da função na variavél (informar nome conforme\r",
+									"//contesto do teste) de ambiente\r",
+									"//o postiman irá setar no envionment que está selecionado no postman\r",
+									"//a variavél de ambiente FirstName criada incial com maíscula para diferenciar da da função receberá\r",
+									"//nela os dados da função (a lista)\r",
+									"pm.environment.set(\"FirstNameTeste\", firstName());\r",
+									"\r",
+									"\r",
+									"function lastName() {\r",
+									"\r",
+									"let lastName = [\"Alves de Souza\", \"Silva Santo\", \"Silva e Silva\", \"Consta e Silva\", \"Andrade e Souza\", \"Rezende de Rezende\", \"Matias da Silva\", \"De Souza\", \"Silva\", \"Costa\", \"Rodrigues\", \"Prates\", \"Maria de Maria\"]\r",
+									"\r",
+									"let randomItem = lastName[Math.floor(Math.random() * lastName.length)]\r",
+									"\r",
+									"return randomItem\r",
+									"\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"LastNameTeste\", lastName());\r",
+									"\r",
+									"//setando na variavél FullName o nome e sobre nome e com isso ao passar a variavél FullName no contrato do\r",
+									"//teste os dados será carregados dinamicamente \r",
+									"pm.environment.set(\"FullName\", pm.environment.get(\"FirstNameTeste\") + \" \" + pm.environment.get(\"LastNameTeste\"))\r",
+									"\r",
+									"\r",
+									"function accessProfile() {\r",
+									"let accessProfile = [\"ADMIN\", \"TI\", \"FINANCEIRO\", \"CONTROLADORIA\"]\r",
+									"let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)]\r",
+									"return randomItem\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"AccessProfile\", accessProfile());\r",
+									"\r",
+									"\r",
+									"//criando a função do provedor de e-mail e recebendo uma lista de e-mail\r",
+									"function providerMail() {\r",
+									"let providerMail = [\"@terra.com.br\", \"@yahoo.com.br\", \"@gmail.com\", \"@hotmail.com\"]\r",
+									"let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)]\r",
+									"return randomItem\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"ProviderMail\", providerMail());\r",
+									"\r",
+									"\r",
+									"//gerando email dinamicamente com o uso do replacein e setando na variável Email\r",
+									"pm.environment.set(\"Email\", pm.environment.get(\"FirstNameTeste\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"ProviderMail\"))\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"mail\": \"{{Email}}\",\r\n    \"password\": \"{{Password}}\",\r\n    \"confirmPassword\": \"{{Password}}\",\r\n    \"accessProfile\": \"{{AccessProfile}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login - sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//validando o status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//validando se na resposta retorna o token\r",
+									"pm.test(\"Validando se retornou token no response\", function(){\r",
+									"    \r",
+									"//capturando o token no response, usando comando json.parse\r",
+									"//para analisar e trazer no mesmo padrão demonstrado no \r",
+									"//response no postman, usando o comando pm.response.text()\r",
+									"//depois .objeto para recuperar em texto a informação desejada\r",
+									"//que neste caso é o token, assim no final coloca-se .token\r",
+									"    let token = JSON.parse(pm.response.text()).token\r",
+									"\r",
+									"//verificando se existe dados no response do token\r",
+									"    pm.expect(token).to.exist\r",
+									"\r",
+									"//outra forma de verificar o token\r",
+									"//pm.expect(JSON.parse(pm.response.text()).token).to.exist\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{Email}}\",\r\n    \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
