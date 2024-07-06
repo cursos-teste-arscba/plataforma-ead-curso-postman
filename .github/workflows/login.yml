@@ -29,6 +29,9 @@ jobs:
       - name: Step 1 check version Newman and Node
         run: 
             newman --version
+
+      - name: Step 1/2 check version Node
+        run: 
             node --version
 
       - name: Step 2 instalando o newman report
